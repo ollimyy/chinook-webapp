@@ -19,7 +19,7 @@ public class ArtistDao {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet results = null;
-		List<Artist> allArtists = new ArrayList();
+		List<Artist> allArtists = new ArrayList<>();
 		
 		try {
 			connection = db.connect();
@@ -40,5 +40,31 @@ public class ArtistDao {
 		}
 		
 		return allArtists;
+	}
+	
+	public boolean addArtist(Artist newArtist) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		boolean success = false;
+		
+		try {
+			connection = db.connect();
+			statement = connection.prepareStatement("INSERT INTO Artist (name) VALUES (?)");
+			statement.setString(1, newArtist.getName());
+			
+			int lines = statement.executeUpdate();
+			if (lines > 0) {
+				success = true;
+			}
+				
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			
+		} finally {
+		db.closeAll(connection, statement, result);
+		}
+		
+		return success;
 	}
 }
