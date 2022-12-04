@@ -29,7 +29,6 @@ public class ArtistListServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.getWriter().write("HELLO!");
 		Artist newArtist = new Artist(req.getParameter("name"));
 		artDao.addArtist(newArtist);
 		resp.sendRedirect("/");

@@ -13,6 +13,32 @@ public class ArtistDao {
 	
 	private Database db = new Database();
 	
+	public String getName(long id) {
+		String selectArtist = "SELECT Name FROM Artist WHERE ArtistId = ?";
+	
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String artistName = "";
+		
+		try {
+			connection = db.connect();
+			statement = connection.prepareStatement(selectArtist);
+			statement.setString(1, Long.toString(id));
+			result = statement.executeQuery();
+			
+			artistName = result.getString("Name");
+			
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			
+		} finally {
+		db.closeAll(connection, statement, result);
+		}
+		
+		return artistName;
+	}
+	
 	public List<Artist> getAllArtists(){
 		String selectAll = "SELECT ArtistId, Name FROM Artist ORDER BY Name ASC";
 		
