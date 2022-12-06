@@ -1,9 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,5 +44,14 @@ public class SearchServlet extends HttpServlet {
 		req.setAttribute("albumartists", albumArtists);
 		
 		req.getRequestDispatcher("/WEB-INF/searchresults.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String searchTerm = req.getParameter("search");
+		// avoid issues with user inputs containing special characters such as \ or &
+		// https://stackoverflow.com/questions/10786042/java-url-encoding-of-query-string-parameters
+		String url = "/search?term=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8);
+		resp.sendRedirect(url);
 	}
 }

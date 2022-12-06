@@ -5,12 +5,20 @@
 	<meta charset="UTF-8">
 	<head>
 		<title>Chinook</title>
+		<!-- https://github.com/oxalorg/sakura -->
+		<link rel="stylesheet" href="/styles/sakura.css" type="text/css">
 	</head>
 	<body>
 		<h1>Chinook</h1>
-		<a href="/">Back to artists.</a><br/><br/>
-		<h2>Results for <c:out value="${ searchterm }"/>:</h2>
-		<h3>Artists:</h3>
+		<!-- Search box -->
+		Search artists and albums:
+		<form method="post">
+			<input name="search" type="text" required value="${ searchterm }"/>
+			<input type="submit" value="Search" />
+		</form><br/>
+		<a href="/">&#11013 Back to artists.</a><br/><br/>
+		<h5>Results for "<c:out value="${ searchterm }"/>":</h5>
+		<h4>Artists:</h4>
 		<c:if test="${ artists.isEmpty() }">
 			<p>No artists found for "<c:out value="${ searchterm }"/>".</p>
 		</c:if>
@@ -19,7 +27,7 @@
 			<li><a href="/albums?ArtistId=${ artist.getArtistId() }"><c:out value="${ artist.getName() }"/></a></li>
 		</c:forEach>
 		</ol>
-		<h3>Albums:</h3>
+		<h4>Albums:</h4>
 		<c:if test="${ albums.isEmpty() }">
 			<p>No albums found for "<c:out value="${ searchterm }"/>".</p>
 		</c:if>

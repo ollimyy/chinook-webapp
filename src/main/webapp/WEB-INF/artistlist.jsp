@@ -4,19 +4,32 @@
 <html lang="en">
 	<meta charset="UTF-8">
 	<head>
-		<title>Chinook Artist List</title>
+		<title>Chinook</title>
+		<!-- https://github.com/oxalorg/sakura -->
+		<link rel="stylesheet" href="/styles/sakura.css" type="text/css">
 	</head>
 	<body>
 		<h1>Chinook</h1>
+		<!-- Search box -->
+		Search artists and albums:
 		<form method="post">
-			<input name="search" type="text" required placeholder="type search term here..."/>
+			<input name="search" type="text" required placeholder="type search term here"/>
 			<input type="submit" value="Search" />
-			</form><br/>
-		<h2>All Artists:</h2>
-		<form method="post">
-			<input name="add" type="text" required  placeholder="type artist name here..."/>
-			<input type="submit" value="Add to list" />
 		</form><br/>
+		<h2>All Artists:</h2><br/>
+		<!-- "Add Artist" input box -->
+		Add artist to the list:
+		<form method="post">
+			<input name="add" type="text" required  placeholder="type artist name here"/>
+			<input type="submit" value="Add" />
+		</form><br/>
+		<!-- Show success message after adding artist -->
+		<c:if test="${ !addmessage.isEmpty() }">
+			<c:out value="${ addmessage }"/>
+			<!-- Prevent message showing when refreshing the page after adding an artist -->
+			<c:remove var="addmessage"/>
+		</c:if>
+		<!-- List all artists -->
 		<ol>
 		<c:forEach items="${ artists }" var = "artist">
 			<li><a href="/albums?ArtistId=${ artist.getArtistId() }"><c:out value="${ artist.getName() }"/></a></li>
