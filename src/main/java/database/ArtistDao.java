@@ -14,7 +14,7 @@ public class ArtistDao {
 	private Database db = new Database();
 	
 	public String getName(long id) {
-		String selectArtist = "SELECT Name FROM Artist WHERE ArtistId = ?";
+		String selectWhereId = "SELECT Name FROM Artist WHERE ArtistId = ?";
 	
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -23,7 +23,7 @@ public class ArtistDao {
 		
 		try {
 			connection = db.connect();
-			statement = connection.prepareStatement(selectArtist);
+			statement = connection.prepareStatement(selectWhereId);
 			statement.setString(1, Long.toString(id));
 			result = statement.executeQuery();
 			
@@ -69,6 +69,8 @@ public class ArtistDao {
 	}
 	
 	public boolean addArtist(Artist newArtist) {
+		String insert = "INSERT INTO Artist (Name) VALUES (?)";
+		
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet result = null;
@@ -76,7 +78,7 @@ public class ArtistDao {
 		
 		try {
 			connection = db.connect();
-			statement = connection.prepareStatement("INSERT INTO Artist (name) VALUES (?)");
+			statement = connection.prepareStatement(insert);
 			statement.setString(1, newArtist.getName());
 			
 			int lines = statement.executeUpdate();
@@ -92,5 +94,35 @@ public class ArtistDao {
 		}
 		
 		return success;
+	}
+	
+	public List<Artist> searchArtists(final String searchTerm){
+		String selectLike = "SELECT ArtistId, Name FROM Artist WHERE Name LIKE ? ORDER BY Name ASC";
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+		List<Artist> searchResults = new ArrayList<>();
+		
+		try {
+			connection = db.connect();
+			statement = connection.prepareStatement(selectLike);
+			statement.setString(1, "%" + searchTerm + "%");
+			results = statement.executeQuery();
+			
+			while (results.next()) {
+				long id = results.getLong("ArtistId");
+				String name = results.getString("Name");
+				
+				searchResults.add(new Artist(id, name));
+			}
+			
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			db.closeAll(connection, statement, results);
+		}
+		
+		return searchResults;
 	}
 }

@@ -8,9 +8,13 @@
 	</head>
 	<body>
 		<h1>Chinook</h1>
+		<form method="post">
+			<input name="search" type="text" required placeholder="type search term here..."/>
+			<input type="submit" value="Search" />
+			</form><br/>
 		<h2>All Artists:</h2>
 		<form method="post">
-			<input name="name" type="text" required placeholder="type artist name here..." autofocus />
+			<input name="add" type="text" required  placeholder="type artist name here..."/>
 			<input type="submit" value="Add to list" />
 		</form><br/>
 		<ol>
