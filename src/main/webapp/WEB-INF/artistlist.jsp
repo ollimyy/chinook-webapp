@@ -23,7 +23,8 @@
 			<input name="add" type="text" required  placeholder="type artist name here"/>
 			<input type="submit" value="Add" />
 		</form><br/>
-		<!-- Show success message after adding artist -->
+		<!-- Show success message after adding artist 
+		https://stackoverflow.com/questions/19972073/how-to-show-success-message-on-page-redirect-from-servlet-to-jsp -->
 		<c:if test="${ !addmessage.isEmpty() }">
 			<c:out value="${ addmessage }"/>
 			<!-- Prevent message showing when refreshing the page after adding an artist -->

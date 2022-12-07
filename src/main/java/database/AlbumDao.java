@@ -14,7 +14,7 @@ public class AlbumDao {
 
 	private Database db = new Database();
 	
-	public List<Album> getAlbumsBy(final long artistId){
+	public List<Album> getAlbumsByArtist(final long artistId){
 		
 		List<Album> albumList = new ArrayList<>();
 		String selectAll = "SELECT * FROM Album WHERE ArtistId = ? ORDER BY Title ASC";

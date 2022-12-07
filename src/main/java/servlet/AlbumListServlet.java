@@ -28,7 +28,7 @@ public class AlbumListServlet extends HttpServlet{
 		String artistName = artDao.getName(artistId);
 		req.setAttribute("artist", artistName);
 		
-		List<Album> albums = albDao.getAlbumsBy(artistId);
+		List<Album> albums = albDao.getAlbumsByArtist(artistId);
 		req.setAttribute("albums", albums);
 		req.getRequestDispatcher("/WEB-INF/albumlist.jsp").forward(req, resp);
 	}
