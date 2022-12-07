@@ -14,7 +14,7 @@ Tietokanta yhteyden avaaminen ja sulkeminen.
 
 ### Model-luokat
 
-** Album **
+**Album**
 
 Kuvaa album olion.
 
